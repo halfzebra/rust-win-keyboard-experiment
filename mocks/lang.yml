@@ -1,5 +1,6 @@
-en-US:
- - Code.exe
-
-ru-RU:
- - Discord.exe
+en-US: 
+  - Code.exe
+  - steam.exe
+  - HuntGame.exe
+ru-RU: 
+  - Discord.exe
