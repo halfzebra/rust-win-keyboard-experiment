@@ -1,0 +1,29 @@
+name: Build on Windows
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    - name: Setup MSVC
+      run: |
+        choco install visualstudio2019buildtools
+        choco install visualstudio2019-workload-vctools
+        choco install visualstudio2019-workload-web
+    - name: Build
+      run: |
+        call "C:\Program Files (x86)\Microsoft Visual Studio\2019\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
+        cargo build --release
+    - name: Package
+      run: |
+        7z a -tzip release.zip target/release/app.exe
+    - name: Upload
+      uses: actions/upload-artifact@v2
+      with:
+        name: release
+        path: release.zip
